@@ -1,11 +1,12 @@
-import ItemTable from "./components/ItemTable"
+import ItemForm from "./components/ItemForm"
+import { ProductListProvider } from "./context/productList"
 
 
 function App() {
   return (
-    <div>
-      <ItemTable/>
-    </div>
+    <ProductListProvider>
+      <ItemForm/>
+    </ProductListProvider>
   )
 }
 
