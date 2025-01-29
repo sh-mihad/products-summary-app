@@ -7,7 +7,6 @@ const ItemForm = () => {
   const [item, setItem] = useState(null); // Autocomplete uses null for no selection
   const [qty, setQty] = useState(0);
   const [rate, setRate] = useState(0);
-  const [amount, setAmount] = useState(0);
   const { productDispatch } = useContext(ProductListContext)
 
 
@@ -15,24 +14,22 @@ const ItemForm = () => {
     setItem(newValue);
     if (!newValue) return;
     setRate(newValue.basePrice)
+    setQty(1)
 
   };
 
   const handleQtyChange = (event) => {
     const newQty = +event.target.value;
     setQty(newQty);
-    setAmount(newQty * rate);
   };
 
   const handleRateChange = (event) => {
     const newRate = event.target.value;
     setRate(newRate);
-    setAmount(qty * newRate);
   };
 
   const handleAdd = () => {
-    productDispatch({ type: ADD_PRODUCT, payload: { id: Math.floor(Math.random() * 100), itemName: item.itemName, qty, rate, amount } })
-    setAmount(0)
+    productDispatch({ type: ADD_PRODUCT, payload: { id: Math.floor(Math.random() * 100), itemName: item.itemName, qty, rate, amount:qty* rate} })
     setRate(0)
     setQty(0)
     setItem(null)
@@ -91,7 +88,7 @@ const ItemForm = () => {
           <TextField
             label="Amount"
             type="number"
-            value={amount}
+            value={qty* rate}
             InputProps={{
               readOnly: true,
             }}

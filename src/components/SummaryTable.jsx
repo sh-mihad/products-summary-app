@@ -1,14 +1,19 @@
 import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
+import generatePDF from 'react-to-pdf';
 import { ProductListContext } from '../context/productList/ProductListContext';
+import getTodayDate from '../utils/getTodayDate';
 import transformProducts from '../utils/transformData';
 
 
 export default function SummaryTable() {
      const {productState} = useContext(ProductListContext)
      const data = transformProducts(productState)
-     console.log(data);
+     const targetRef = useRef();
+     let grandTotalAmount = 0; 
   return (
+   <>
+  
     <Box
       sx={{
         border: '1px solid #ccc',
@@ -26,30 +31,40 @@ export default function SummaryTable() {
         overflow: 'hidden', // Prevents content from overflowing
       }}
     >
+      
     <Box
+     
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '16px',
-        borderBottom: '1px solid #ccc',
+        
         backgroundColor: '#fff',
         marginBottom: '16px', // Add some spacing below the section
       }}
     >
       {/* Summary Text */}
-      <Typography variant="h6" component="div">
-        Summary of 30 Jan 2025
-      </Typography>
-
-      {/* Download Button */}
-      <Button variant="contained" color="primary">
+   
+      <Button 
+       onClick={() => generatePDF(targetRef, {filename: `Summary of ${getTodayDate()}.pdf`})}
+      sx={{
+        maxWidth:"200px",
+        float:"right"
+       }} variant="contained" color="primary">
         Download
       </Button>
+
+      {/* Download Button */}
+     
     </Box>
+    <Box ref={targetRef}>
+    <Typography sx={{borderBottom: '1px solid #ccc',marginBottom:"20px"}} variant="h6" component="div">
+        Summary of {getTodayDate()}
+      </Typography>
     {
         data?.length>0 && <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="pricing table">
+        <Table  sx={{ minWidth: 650 }} aria-label="pricing table">
           <TableHead>
             <TableRow>
               <TableCell sx={{ backgroundColor: "#90caf9", fontWeight: "bold" }}>Item Name</TableCell>
@@ -63,20 +78,32 @@ export default function SummaryTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell>{row.itemName}</TableCell>
-                {row.variant?.map((entry, i) => (
-                  <TableCell key={i}>{`${entry.rate}(${entry.qty})`}</TableCell>
-                ))}
-                <TableCell>{row.totalQty}</TableCell>
-                <TableCell>{row.totalAmount}</TableCell>
-              </TableRow>
-            ))}
+            {data?.map((row, index) => {
+              grandTotalAmount =grandTotalAmount+ row.totalAmount
+              console.log(grandTotalAmount)
+              return (
+                <TableRow key={index}>
+                  <TableCell>{row.itemName}</TableCell>
+                  {row.variant?.map((entry, i) => (
+                    <TableCell key={i}>{`${entry.rate}(${entry.qty})`}</TableCell>
+                  ))}
+                  <TableCell>{row.totalQty}</TableCell>
+                  <TableCell>{row.totalAmount}</TableCell>
+                </TableRow>
+              )
+            })}
+             <TableRow >
+                  <TableCell sx={{
+                    textAlign:"right",fontWeight:"bold"
+                  }} colSpan={7}>Grand Total - </TableCell>
+                  <TableCell sx={{textDecoration:"underline",fontWeight:"bold"}}>{grandTotalAmount}</TableCell>
+                </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
     }
     </Box>
+    </Box>
+   </>
   )
 }
