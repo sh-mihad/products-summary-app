@@ -3,13 +3,12 @@ import { useContext } from 'react';
 import { AiOutlineDelete } from "react-icons/ai";
 import { ProductListContext, REMOVE_PRODUCT } from '../context/productList/ProductListContext';
 
-
 const ItemTableList = () => {
   const { productState, productDispatch } = useContext(ProductListContext)
+  console.log("productState",productState);
   const handleEdit=(id)=>{
     productDispatch({type:REMOVE_PRODUCT,payload:id})
   }
-  console.log("productState",productState);
   return (
     <Box
       sx={{

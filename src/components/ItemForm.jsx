@@ -31,7 +31,7 @@ const ItemForm = () => {
   };
 
   const handleAdd = () => {
-    productDispatch({ type: ADD_PRODUCT, payload: { id: item.id, itemName: item.itemName, qty, rate, amount } })
+    productDispatch({ type: ADD_PRODUCT, payload: { id: Math.floor(Math.random() * 100), itemName: item.itemName, qty, rate, amount } })
     setAmount(0)
     setRate(0)
     setQty(0)
