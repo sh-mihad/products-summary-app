@@ -17,8 +17,8 @@ export default function transformProducts(input) {
                 console.log("ekhane ");
                 existingVariant.qty += item.qty;
             } else {
-                console.log("new value");
-                existingProduct.variant.push({ rate: item.rate, qty: item.qty });
+                const emptyCelIndex= existingProduct.variant.findIndex((item)=>item.rate === 0 && item.qty === 0 )
+                existingProduct.variant[emptyCelIndex]=({ rate: item.rate, qty: item.qty });
             }
 
             existingProduct.totalQty += item.qty;
