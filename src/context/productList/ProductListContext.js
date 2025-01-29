@@ -11,9 +11,9 @@ export const REMOVE_PRODUCT = "REMOVE/PRODUCT";
 export const productReducer = (state, action) => {
     switch (action.type) {
       case ADD_PRODUCT:
-        return [ ...state, action.payload ];
+        return [ action.payload ,...state];
       case REMOVE_PRODUCT:
-        return [...state].map(item=>item.id !== action.payload);
+        return [...state].filter(item=>item.id !== action.payload);
       default:
         return state;
     }
