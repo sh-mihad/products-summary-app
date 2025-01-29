@@ -2,6 +2,7 @@ import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableH
 import { useContext, useRef } from 'react';
 import generatePDF from 'react-to-pdf';
 import { ProductListContext } from '../context/productList/ProductListContext';
+import formatMoney from '../utils/formatMony';
 import getTodayDate from '../utils/getTodayDate';
 import transformProducts from '../utils/transformData';
 
@@ -22,13 +23,11 @@ export default function SummaryTable() {
         backgroundColor: '#fff',
         padding: '16px',
         marginTop: '16px',
-        minHeight: '400px',
-        maxHeight: '400px', // Add a maxHeight to limit the box's height
         display: 'flex',
-        flexDirection: 'column', // Ensure proper layout for scrollable content
+        flexDirection: 'column', 
         width: '100%',
         maxWidth: '1200px',
-        overflow: 'hidden', // Prevents content from overflowing
+        overflow: 'hidden', 
       }}
     >
       
@@ -39,9 +38,8 @@ export default function SummaryTable() {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '16px',
-        
         backgroundColor: '#fff',
-        marginBottom: '16px', // Add some spacing below the section
+        marginBottom: '16px', 
       }}
     >
       {/* Summary Text */}
@@ -88,7 +86,7 @@ export default function SummaryTable() {
                     <TableCell key={i}>{`${entry.rate}(${entry.qty})`}</TableCell>
                   ))}
                   <TableCell>{row.totalQty}</TableCell>
-                  <TableCell>{row.totalAmount}</TableCell>
+                  <TableCell>{formatMoney(row.totalAmount)}</TableCell>
                 </TableRow>
               )
             })}
@@ -96,7 +94,7 @@ export default function SummaryTable() {
                   <TableCell sx={{
                     textAlign:"right",fontWeight:"bold"
                   }} colSpan={7}>Grand Total - </TableCell>
-                  <TableCell sx={{textDecoration:"underline",fontWeight:"bold"}}>{grandTotalAmount}</TableCell>
+                  <TableCell sx={{textDecoration:"underline",fontWeight:"bold"}}>{formatMoney(grandTotalAmount)}</TableCell>
                 </TableRow>
           </TableBody>
         </Table>
