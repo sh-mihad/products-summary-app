@@ -1,7 +1,7 @@
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { AiOutlineDelete } from "react-icons/ai";
-import { ProductListContext, REMOVE_PRODUCT } from '../context/productList/ProductListContext';
+import { ProductListContext, REMOVE_ALL_PRODUCT, REMOVE_PRODUCT } from '../context/productList/ProductListContext';
 
 const ItemTableList = () => {
   const { productState, productDispatch } = useContext(ProductListContext)
@@ -27,6 +27,33 @@ const ItemTableList = () => {
         overflow: 'hidden', // Prevents content from overflowing
       }}
     >
+      <Box
+     
+     sx={{
+       display: 'flex',
+       justifyContent: 'space-between',
+       alignItems: 'center',
+       padding: '16px',
+       backgroundColor: '#fff',
+       marginBottom: '16px', 
+     }}
+   >
+     {/* Summary Text */}
+  
+     <Button 
+     onClick={()=>{
+      productDispatch({type:REMOVE_ALL_PRODUCT})
+     }}
+     sx={{
+       maxWidth:"200px",
+       float:"right"
+      }} variant="contained" color="primary">
+       Delete All Items
+     </Button>
+
+     {/* Download Button */}
+    
+   </Box>
       {productState?.data?.length < 1 ? (
         <Typography variant="body1" color="textSecondary">
           No items added yet.
