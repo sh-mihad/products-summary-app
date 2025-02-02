@@ -9,7 +9,7 @@ import transformProducts from '../utils/transformData';
 
 export default function SummaryTable() {
      const {productState} = useContext(ProductListContext)
-     const data = transformProducts(productState)
+     const data = productState?.data.length > 0 ? transformProducts(productState?.data) : []
      const targetRef = useRef();
      let grandTotalAmount = 0; 
   return (

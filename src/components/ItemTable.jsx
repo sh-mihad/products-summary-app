@@ -27,7 +27,7 @@ const ItemTableList = () => {
         overflow: 'hidden', // Prevents content from overflowing
       }}
     >
-      {productState?.length < 1 ? (
+      {productState?.data?.length < 1 ? (
         <Typography variant="body1" color="textSecondary">
           No items added yet.
         </Typography>
@@ -50,7 +50,7 @@ const ItemTableList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {productState.map((row, index) => (
+              {productState?.data.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>{row.id}</TableCell>
                   <TableCell>{row.itemName}</TableCell>

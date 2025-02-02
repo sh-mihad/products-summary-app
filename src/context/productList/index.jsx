@@ -1,9 +1,13 @@
 /* eslint-disable react/prop-types */
-import { useReducer } from "react";
-import { ProductListContext, productInitialState, productReducer } from "./ProductListContext";
+import { useEffect, useReducer } from "react";
+import { LOAD_DATA_FROM_STORAGE, ProductListContext, productInitialState, productReducer } from "./ProductListContext";
 
 export const ProductListProvider = ({ children }) => {
     const [state, dispatch] = useReducer(productReducer, productInitialState);
+
+    useEffect(()=>{
+      dispatch({type:LOAD_DATA_FROM_STORAGE})
+    },[])
   
     return (
       <ProductListContext.Provider value={{ productState:state, productDispatch:dispatch }}>
