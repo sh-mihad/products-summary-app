@@ -58,7 +58,7 @@ export default function SummaryTable() {
     </Box>
     <Box ref={targetRef}>
     <Typography sx={{borderBottom: '1px solid #ccc',marginBottom:"20px"}} variant="h6" component="div">
-        Summary of {getTodayDate()}
+        Summary of {productState.date}
       </Typography>
     {
         data?.length>0 && <TableContainer component={Paper}>
@@ -78,7 +78,6 @@ export default function SummaryTable() {
           <TableBody>
             {data?.map((row, index) => {
               grandTotalAmount =grandTotalAmount+ row.totalAmount
-              console.log(grandTotalAmount)
               return (
                 <TableRow key={index}>
                   <TableCell>{row.itemName}</TableCell>
